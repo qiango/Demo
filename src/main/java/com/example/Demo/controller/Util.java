@@ -32,7 +32,6 @@ public class Util {
         Workbook workbook = null;
 
         try {
-//            inputStream = new FileInputStream(new File(excelFilePath));
             if (origName.toLowerCase().endsWith("xlsx")) {
                 workbook = new XSSFWorkbook(inputStream);
             } else if (origName.toLowerCase().endsWith("xls")) {

@@ -8,13 +8,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
+import javax.servlet.ServletInputStream;
+import javax.servlet.http.HttpServletRequest;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by hz on 12/7/17.
@@ -27,9 +29,10 @@ public class ExcelController {
     private static final String[] IMAGE_TYPE = new String[]{".xlsx", ".xls"};
 
     @RequestMapping(method = RequestMethod.POST)
-    public String imports(@RequestParam("uploadFiles") MultipartFile uploadFiles) {
-        String origName = uploadFiles.getOriginalFilename();
-        // 校验格式
+    public String imports(@RequestParam("uploadFiles") MultipartFile file) {
+
+        String origName = file.getOriginalFilename();
+//         校验格式
         boolean isLegal = false;
         for (String type : IMAGE_TYPE) {
             if (StringUtils.endsWithIgnoreCase(origName, type)) {
@@ -42,7 +45,7 @@ public class ExcelController {
         }
         InputStream inputStream = null;
         try {
-            inputStream = uploadFiles.getInputStream();
+            inputStream = file.getInputStream();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -92,8 +95,25 @@ public class ExcelController {
             jsonArray.add(jsonObject);
         }
         return ValueUtil.toJson(200,jsonArray);
-
     }
 
+
+    @RequestMapping(value = "/aaaa",method = RequestMethod.POST)
+    public String getJson(HttpServletRequest request){
+        MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+        MultipartFile multipartFile = multipartRequest.getFile("uploadFiles");
+        if (request instanceof MultipartHttpServletRequest) {
+            // process
+            System.out.print("success");
+        }
+        try {
+            InputStream inputStream = multipartFile.getInputStream();
+            String originalFilename = multipartFile.getOriginalFilename();
+            System.out.print(originalFilename);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
 }

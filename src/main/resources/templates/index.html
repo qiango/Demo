@@ -1,11 +1,68 @@
-<!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>demo</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-</head>
-<body>
-<h1>my thymeleaf page2</h1>
-<h1>hello world</h1>
-</body>
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<script src="http://cdn.static.runoob.com/libs/jquery/1.10.2/jquery.min.js"></script>
+	</head>
+	<body>
+		<div class="main">
+			<p>
+				<input type="file" id="selectfile" value="选择文件" />
+			</p>
+			<button id="submit">上传</button>
+			<table border="1" id="box">
+				<tr>
+					<th>姓名</th>
+					<th>电话</th>
+					<th>收货地址</th>
+					<th>商品名称</th>
+					<th>数量</th>
+				</tr>
+			</table>
+		</div>
+		<script>
+			$(document).ready(function(){
+				var data;
+				$('#selectfile').change(function(){
+					//data=this.files[0];
+					//console.log(data);
+					data=new FormData();
+					data.append("uploadFiles",this.files[0]);
+				});
+				$('#submit').click(function(){
+					$.ajax({
+						url:'http://localhost:8080/test',
+						type:'POST',
+						contentType:false,
+						processData : false, 
+//						async: false,    
+            			cache: false, 
+						data:data,
+						success:function(data){
+							var data=JSON.parse(data);
+							console.log(data.data.num);
+							if(data.code==200){
+								var ohtml="";
+								for(var i=0;i<data.data.length;i++){
+									ohtml+='<tr>'+
+												'<td>'+data.data[i].num+'</td>'+
+												'<td>'+data.data[i].name+'</td>'+
+												'<td>'+data.data[i].goodsName+'</td>'+
+												'<td>'+data.data[i].phoneNumber+'</td>'+
+												'<td>'+data.data[i].address+'</td>'+
+											+'</tr>';
+								}
+								$('#box').append(ohtml);
+							}
+							console.log(data);
+						},
+						error:function(xhr){
+							console.log(xhr);
+						}
+					});
+				});
+			});
+		</script>
+	</body>
 </html>
