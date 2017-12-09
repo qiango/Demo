@@ -19,14 +19,13 @@
 					<th>商品名称</th>
 					<th>数量</th>
 				</tr>
+
 			</table>
 		</div>
 		<script>
 			$(document).ready(function(){
 				var data;
 				$('#selectfile').change(function(){
-					//data=this.files[0];
-					//console.log(data);
 					data=new FormData();
 					data.append("uploadFiles",this.files[0]);
 				});
@@ -35,9 +34,9 @@
 						url:'http://localhost:8080/test',
 						type:'POST',
 						contentType:false,
-						processData : false, 
-//						async: false,    
-            			cache: false, 
+						processData : false,
+//						async: false,
+            			cache: false,
 						data:data,
 						success:function(data){
 							var data=JSON.parse(data);

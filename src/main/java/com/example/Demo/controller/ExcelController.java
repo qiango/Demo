@@ -13,13 +13,11 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.*;
 
 /**
- * Created by hz on 12/7/17.
+ * Created by hz on 12/8/17.
  */
 @RestController
 @RequestMapping("/test")
@@ -67,20 +65,20 @@ public class ExcelController {
         if (ValueUtil.isEmpity(list)) {
             return "导入失败";
         }
-        for (Map<String, Object> map : list) {
-            Map<String, String> param = new HashMap<>();
-            String name = map.get("name").toString();
-            String phoneNumber = map.get("phoneNumber").toString();
-            String address = map.get("address").toString();
-            String goodsName = map.get("goodsName").toString();
-            String num = map.get("num").toString();
-            param.put("name", name);
-            param.put("phoneNumber", phoneNumber);
-            param.put("address", address);
-            param.put("goodsName", goodsName);
-            param.put("num", num);
-
-        }
+//        for (Map<String, Object> map : list) {
+//            Map<String, String> param = new HashMap<>();
+//            String name = map.get("name").toString();
+//            String phoneNumber = map.get("phoneNumber").toString();
+//            String address = map.get("address").toString();
+//            String goodsName = map.get("goodsName").toString();
+//            String num = map.get("num").toString();
+//            param.put("name", name);
+//            param.put("phoneNumber", phoneNumber);
+//            param.put("address", address);
+//            param.put("goodsName", goodsName);
+//            param.put("num", num);
+//
+//        }
         return ValueUtil.toJson(200,list);
     }
 

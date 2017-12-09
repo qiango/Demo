@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 /**
- * Created by hz on 12/7/17.
+ * Created by hz on 12/8/17.
  */
 public class ValueUtil {
 
